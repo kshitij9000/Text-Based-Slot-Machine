@@ -1,13 +1,15 @@
 # Text Based Slot Machine - TechWithTom - Learning Python Again
 
 MAX_LINES = 3
+MAX_BET = 1000
+MIN_BET = 10
 
 
 def deposit():
-    """Collects deposit amount from user."""
+    """Collects deposit amount."""
     while True:
         # Reads a line from input and converts to string
-        amount = input("Enter deposit amount: ")
+        amount = input("Enter deposit amount: $")
         # isdigit returns False if non numeric characters exist including -ve no
         if amount.isdigit():
             amount = int(amount)
@@ -16,7 +18,7 @@ def deposit():
             else:
                 print("Deposit amount must be greater than zero.")
         else:
-            print("Enter valid number.")
+            print("Please enter a number.")
             
     return amount
 
@@ -31,10 +33,25 @@ def get_no_of_lines():
             else:
                 print("Enter valid amount of lines.")
         else:
-            print("Enter valid number.")
+            print("Please enter a number.")
             
     return lines
 
+def get_bet():
+    """Collects bet amount."""
+    while True:
+        amt = input("How much to would you like to bet? $")
+        if amt.isdigit():
+            amt = int(amt)
+            if MIN_BET <= amt <= MAX_BET:
+                break
+            else:
+                print(f"Amount must be between &{MIN_BET} - &{MAX_BET}.")
+        else:
+            print("Please enter a number.")
+            
+    return amt
+    
 
 def main():
     balance = deposit()
