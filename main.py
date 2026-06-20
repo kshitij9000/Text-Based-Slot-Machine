@@ -1,9 +1,22 @@
 # Text Based Slot Machine - TechWithTom - Learning Python Again
 
+import random
+
 MAX_LINES = 3
 MAX_BET = 1000
 MIN_BET = 10
 
+# Numbers of Rows and Columns in slot machine
+ROWS = 3
+COLS = 3
+
+symbol_counts = {
+    "A": 1, #jackpot
+    "B": 3,
+    "C": 4,
+    "D": 5,
+    "E": 7
+}
 
 def deposit():
     """Collects deposit amount."""
@@ -51,8 +64,35 @@ def get_bet():
             print("Please enter a number.")
             
     return amt
-    
 
+def get_slot_machine_spin(rows, cols, symbols):
+    """Generate a slot machine spin using weighted symbol frequencies."""
+    # This list stores all the symbols available.
+    all_symbols = []
+    # Stores key and value into symbol and count
+    for symbol, count in symbols.items():
+        # symbol = "B", count = 3, ["B"]*3 = ["B", "B", "B"] 
+        # extend adds this to all_symbols list
+        all_symbols.extend([symbol]*count)
+    
+    # This list stores the values on all the 3 columns available
+    columns = [[],[],[]]
+    for _ in range(cols):
+        column = []
+        # Numeric copy of all symbols
+        # If [:] is not used same curr_symbols points to same address
+        # Meaning change to curr_symbols would change all_symbols and vice versa
+        curr_symbols = all_symbols[:]
+        for _ in range(rows):
+            value = random.choice(curr_symbols)
+            curr_symbols.remove(value)
+            column.append(value)
+            
+        columns.append(column)
+    
+    return columns
+               
+    
 def main():
     balance = deposit()
     lines = get_no_of_lines()
