@@ -12,10 +12,18 @@ COLS = 3
 
 symbol_counts = {
     "A": 1, #jackpot
-    "B": 3,
-    "C": 4,
-    "D": 5,
-    "E": 7
+    "B": 2,
+    "C": 3,
+    "D": 8,
+    "E": 20
+}
+
+symbol_values = {
+    "A": 600, #jackpot
+    "B": 100,
+    "C": 15,
+    "D": 3,
+    "E": 2
 }
 
 def deposit():
@@ -96,7 +104,22 @@ def print_slot_machine(columns):
     """Prints the slot machine in neat structure."""
     for row in range(len(columns[0])):
         values = [column[row] for column in columns]
-        print(" | ".join(values))           
+        print(" | ".join(values))
+
+def check_wins(columns, lines, bet, values):
+    """Check if user won a bet or not."""
+    winnings = 0
+    winning_lines = []
+    for line in range(lines):
+        symbol = columns[0][line]
+        for column in columns:
+            symbol_to_check = column[line]
+            if symbol != symbol_to_check:
+                break
+        else:
+            winnings += values[symbol] * bet        
+            winning_lines.append(line + 1)
+    return winnings, winning_lines
     
 def main():
     balance = deposit()
@@ -113,9 +136,11 @@ def main():
     print(f"You are betting ${bet} on {lines} lines. Total bet is equal to ${total_bet}.")
     
     slots = get_slot_machine_spin(ROWS, COLS, symbol_counts)
-    print(slots)
     print_slot_machine(slots)
-        
     
-main()        
-            
+    winnings, winning_lines = check_wins(slots, lines, bet, symbol_values)
+    print(f"You won ${winnings}.")
+    print(f"You won on the line:", *winning_lines)
+    
+
+main()
