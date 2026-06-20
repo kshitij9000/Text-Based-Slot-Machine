@@ -75,8 +75,8 @@ def get_slot_machine_spin(rows, cols, symbols):
         # extend adds this to all_symbols list
         all_symbols.extend([symbol]*count)
     
-    # This list stores the values on all the 3 columns available
-    columns = [[],[],[]]
+    # This list stores the values on all the columns available
+    columns = []
     for _ in range(cols):
         column = []
         # Numeric copy of all symbols
@@ -91,7 +91,12 @@ def get_slot_machine_spin(rows, cols, symbols):
         columns.append(column)
     
     return columns
-               
+ 
+def print_slot_machine(columns):
+    """Prints the slot machine in neat structure."""
+    for row in range(len(columns[0])):
+        values = [column[row] for column in columns]
+        print(" | ".join(values))           
     
 def main():
     balance = deposit()
@@ -106,6 +111,10 @@ def main():
             print(f"You do not have enough to bet ${total_bet}. Your balance: ${balance}.")
         
     print(f"You are betting ${bet} on {lines} lines. Total bet is equal to ${total_bet}.")
+    
+    slots = get_slot_machine_spin(ROWS, COLS, symbol_counts)
+    print(slots)
+    print_slot_machine(slots)
         
     
 main()        
