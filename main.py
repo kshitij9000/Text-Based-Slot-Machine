@@ -148,6 +148,16 @@ def main():
     balance = deposit()
     while True:
         print(f"Current Balance: ${balance}.")
+        
+        # Force a top-up if balance can't cover even the smallest possible bet
+        if balance < MIN_BET:
+            print(f"Your balance (${balance}) is below the minimum bet (${MIN_BET}).")
+            i = input("Deposit more to continue (q to quit): ")
+            if i == "q":
+                break
+            balance +=deposit()
+            continue
+        
         i = input("Press enter to play (q to quit). ")
         if i == "q":
             break
