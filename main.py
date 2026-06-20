@@ -13,15 +13,15 @@ COLS = 3
 symbol_counts = {
     "A": 1, #jackpot
     "B": 2,
-    "C": 3,
-    "D": 8,
-    "E": 20
+    "C": 4,
+    "D": 13,
+    "E": 15
 }
 
 symbol_values = {
-    "A": 600, #jackpot
-    "B": 100,
-    "C": 15,
+    "A": 15, #jackpot
+    "B": 6,
+    "C": 4,
     "D": 3,
     "E": 2
 }
@@ -120,9 +120,8 @@ def check_wins(columns, lines, bet, values):
             winnings += values[symbol] * bet        
             winning_lines.append(line + 1)
     return winnings, winning_lines
-    
-def main():
-    balance = deposit()
+
+def spin(balance):
     lines = get_no_of_lines()
     # Check if user bets more than the amount present in balance.
     while True:
@@ -142,5 +141,18 @@ def main():
     print(f"You won ${winnings}.")
     print(f"You won on the line:", *winning_lines)
     
+    return winnings - total_bet
+    
+    
+def main():
+    balance = deposit()
+    while True:
+        print(f"Current Balance: ${balance}.")
+        i = input("Press enter to play (q to quit). ")
+        if i == "q":
+            break
+        balance += spin(balance)
+        
+        print(f"You left with ${balance}.")
 
 main()
